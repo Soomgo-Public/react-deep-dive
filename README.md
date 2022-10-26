@@ -27,7 +27,7 @@
 
 | 주차 | 일시         | 분량                                     | 참여자                                                                     |
 |-----|-------------|-----------------------------------------|-------------------------------------------------------------------------|
-| 1주차   | 10월 26일 (목)  | How Does React Actually Work? React.js Deep Dive #1 (~5:33 React components, elements and component instances 까지)|
+| 1주차   | 10월 27일 (목)  | How Does React Actually Work? React.js Deep Dive #1 (~5:33 React components, elements and component instances 까지)|
 
 
 ## 참여자 :sparkles:
