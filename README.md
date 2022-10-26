@@ -1,10 +1,10 @@
-# 📚 숨고의 구성원들과 함께하는 React deep dive 스터디
+# 🤿 숨고의 구성원들과 함께하는 React deep dive 스터디
 
 
 ## 🎥 참고자료
 
-- [https://www.youtube.com/watch?v=7YhdqIR2Yzo&list=PLxRVWC-K96b0ktvhd16l3xA6gncuGP7gJ](https://www.youtube.com/watch?v=7YhdqIR2Yzo&list=PLxRVWC-K96b0ktvhd16l3xA6gncuGP7gJ)
-    - React.js Deep Dive재생목록에 있는 5개의 영상
+- [React.js Deep Dive Youtube Play List](https://www.youtube.com/watch?v=7YhdqIR2Yzo&list=PLxRVWC-K96b0ktvhd16l3xA6gncuGP7gJ)
+    - React.js Deep Dive 재생목록에 있는 5개의 영상
 
 ## 🧭 운영방향
 
