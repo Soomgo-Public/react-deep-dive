@@ -8,7 +8,7 @@
 - 부모 컴포넌트의 값이 바뀌면 자식을 새롭게 갱신하는 작업이 필요함
 - 부모 컴포넌트는 자식 컴포넌트 인스턴스 관리 뿐만 아니라 자신의 DOM node도 관리해야 함
 - 상태가 늘어날 수록 코드 라인은 제곱으로 늘어남
-- 부모가 자식을 직접 참조하고 있으므로 이들을 분리하기 어려워짐
+- 부모가 자식을 직접 참조하고 있으므로 추후에 이들을 분리하기 어려워짐
 
 ```jsx
 class Form extends TraditionalObjectOrientedView {
@@ -51,9 +51,11 @@ class Form extends TraditionalObjectOrientedView {
 > *In React, this is where the elements come to rescue.*
 > 
 
-### Element는 Tree를 설명한다.
+### Element는 Tree를 묘사한다.
 
 React에서 element란 컴포넌트를 plain object로 표현한 것이다. (*이것은 인스턴스가 아니다*)
+
+(*is not instance, just tell React what you want to see on the screen* ⇒ 인스턴스가 아니라 화면에 무엇을 그려야 할지 알려주는 요약본)
 
 React에서는 JSX는
 
@@ -73,9 +75,17 @@ const App = () => {
     className: "button button-blue"
   }, /*#__PURE__*/React.createElement("b", null, "OK!"));
 };
+
+// React v17부터는 React.createElement로 하지 않는다
+// Inserted by a compiler (don't import it yourself!)
+// import {jsx as _jsx} from 'react/jsx-runtime';
+
+// function App() {
+//   return _jsx('h1', { children: 'Hello world' });
+// }
 ```
 
-[아래와 같은 (React.createElement 함수를 통해) React Element로 변환된다.](https://babeljs.io/repl)
+[아래와 같은 (React.createElement 함수를 통해) React Element로 변환된다.](https://babeljs.io/repl)(react17이전)
 
 ```jsx
 
@@ -85,7 +95,10 @@ console.log(
   }, /*#__PURE__*/React.createElement("b", null, "OK!"))
 )
 
+// console.log(_jsx('h1', { children: 'Hello world' }))
+
 // element: React.createElement()의 반환값
+// DOM element
 {
   type: 'button',  // type: (string | Class or Function)
   props: {
@@ -100,7 +113,10 @@ console.log(
 
 type이 string인 경우 type은 해당 컴포넌트가 어떤 HTML Tag인지를 표현하고, props는 해당 HTML Tag의 속성들을 명시한다.
 
+element의 type이 Class나 Function이면 어떨까?
+
 ```jsx
+ // Component element
 {
   type: Button,
   props: {
@@ -110,23 +126,9 @@ type이 string인 경우 type은 해당 컴포넌트가 어떤 HTML Tag인지를
 }
 ```
 
-이와 같이 element의 type이 Class나 Function이면 어떨까?
-
 여기서 바로 리액트의 핵심 아이디어가 나온다.
 
 ***element(Dom element, Component element)들은 서로 중첩되고 섞일 수 있다.***
-
-```jsx
-const DangerButton = ({ children }) => ({
-  type: Button,
-  props: {
-    color: 'red',
-    children: children
-  }
-});
-```
-
-`DangerButton`은 `Button`이 `div`이나 `button` 같은 HTML tag인지, Class 혹은 Function으로 만들어진 컴포넌트인지 전혀 신경 쓸 필요가 없다. 그냥 Button 컴포넌트에 color props와 children을 전달해주고 있을 뿐이다.
 
 ```jsx
 const DeleteAccount = () => (
@@ -165,20 +167,19 @@ const DeleteAccount = () => ({
 
 ```
 
-이런 mix and matching을 통해 이들의 is-a와 has-a관계가 형성되고, 컴포넌트를 서로 분리시킬 수 있다.
-
-- `Button` is a DOM `<button>` with specific properties.
-- `DangerButton` is a `Button` with specific properties.
-- `DeleteAccount` contains a `Button` and a `DangerButton` inside a `<div>`.
+이런 mix and matching을 통해 컴포넌트를 서로 분리시킬 수 있다. (이들간의 is-a와 has-a관계가 형성됨)
 
 ### Component는 **Element Trees를 캡슐화한다**
+
+Component는 Element에 돔 트리에 전달할 정보만 Encapsulate되어 있다.
+ 
 
 리액트가 함수나 클래스 타입(컴포넌트)의 element를 만나면
 
 ```jsx
 // Component element
 {
-  type: Button,  // Component: Element Trees 캡슐화
+  type: Button,   // Button에 대한 정보가 이것뿐. (Button의 메서드나 상태 등 여기서 알수 없음)
   props: {
     color: 'blue',
     children: 'OK!'
@@ -204,9 +205,11 @@ const DeleteAccount = () => ({
 }
 ```
 
-리액트는 페이지의 모든 element에 대한 기본 DOM tag element들을 알 때까지 이러한 과정을 계속 반복한다. (type이 string이 될 때 까지)
+리액트는 페이지의 모든 element에 대한 기본 DOM element들을 알 때까지 이러한 과정을 계속 반복한다. (type이 string이 될 때 까지)
 
-(리액트는 아이들이 세상의 모든 작은 것들(기본 DOM tag elements)을 알아낼 때까지 우리가 설명하는 모든 **"X는 Y"**에 대해 *"Y"가 무엇이냐고* 묻는 것과 같다.)
+(리액트는 아이들이 세상의 모든 작은 것들(기본 DOM element)을 알아낼 때까지 우리가 설명하는 모든 **"X는 Y"**에 대해 *"Y"가 무엇이냐고* 묻는 것과 같다.)
+
+모든 elements 가 지닌 DOM elements 를 알게 됨 → React가 해당 DOM elements 들을 적절한 때에 create, update, destroy해준다(리액트가 다른 곳에서 수행한다 우리가 해주지 않아도 됨.)
 
 최종적으로, 아까 본 Form을 React에서는 다음과 같이 작성할 수 있다.
 
@@ -231,6 +234,8 @@ const Form = ({ isSubmitted, buttonText }) => {
     }
   };
 ```
+
+React element 를 활용하여, 기존에 DOM structure(실제 돔의 구조. removeChild, render나 destory메소드 등)을 모두 활용하지 않고, 필요한 정보만 독립적으로 UI 를 관리할 수 있게 됨
 
 컴포넌트로부터 리턴된 Element Tree는 DOM node를 설명할 수도 있고 다른 컴포넌트를 설명하고 있을수도 있다. 이런 방식때문에 리액트가 다른 컴포넌트의 내부 구조를 몰라도 서로 독립적으로 합쳐질수 있는 것이다.
 
@@ -279,7 +284,7 @@ console.log(App())
 
 - React.createElement()의 반환값
 - element는 component를 이루는 작은 단위
-- 탐색하기 쉽고 구문 분석할 필요가 없으며 실제 DOM 요소보다 훨씬 가볍다.****
+- 탐색하기 쉽고 구문 분석할 필요가 없으며 실제 DOM element보다 가볍다.****
 - 엘리먼트는 인스턴스가 아니다. 엘리먼트는 immutable한 **plain object*이다.(엘리먼트가 생성되면, 절대로 변화되지 않는다.)
 - 엘리먼트는 컴포넌트 인스턴스나 DOM node에 관한 정보를 묘사하고 있다.
 - Element는 바로 사용되지는 않으며, Component에서 리턴받아서 사용되곤 한다.
@@ -321,15 +326,18 @@ console.log(<App/>)
 
 # Component instances
 
-**리액트에서** Instance는 위에서 설명한 Element와 Component에 비해 별로 중요하지 않다.
-단지 리액트의 클래스형 컴포넌트를 인스턴스화한걸 Instance라고 표현한다. (함수형 컴포넌트는 Instance가 없다.)
-
-엘리먼트의 type이 Class이면 리액트는 새로운 인스턴스를 생성하고 이것의 render메소드를 실행한다. 또한, 클래스 컴포넌트를 사용하더라도 리액트를 쓸 때 우리는 직접 instance를 관리하지 않는다. (컴포넌트 인스턴스를 직접 생성하거나 파괴하거나 수정하거나 등등..). 리액트가 알아서 해준다.
+- **리액트에서** Instance는 위에서 설명한 Element와 Component에 비해 별로 중요하지 않다.
+- 리액트의 클래스형 컴포넌트를 인스턴스화한걸 Instance라고 표현한다. (함수형 컴포넌트는 Instance가 없다.)
+    - class component 에서의 this
+- 엘리먼트의 type이 Class이면 리액트는 새로운 인스턴스를 생성하고 이것의 render메소드를 실행한다.
+- 클래스 컴포넌트를 사용하더라도 리액트를 쓸 때 직접 instance를 관리하지 않는다. (인스턴스를 직접 생성하거나 파괴하거나 수정하거나 등등..). 리액트가 알아서 해준다.
 
 # 참고자료
 
 - [https://www.youtube.com/watch?v=7YhdqIR2Yzo&list=PLxRVWC-K96b0ktvhd16l3xA6gncuGP7gJ&index=1](https://www.youtube.com/watch?v=7YhdqIR2Yzo&list=PLxRVWC-K96b0ktvhd16l3xA6gncuGP7gJ&index=1)
-- [https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html](https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html)
+- [https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html](https://reactjs.org/blog/2015/12/18/react-components-elements-and-instances.html)s
+- [https://hkc7180.medium.com/react-components-elements-and-instances-번역글-b5744930846b](https://hkc7180.medium.com/react-components-elements-and-instances-%EB%B2%88%EC%97%AD%EA%B8%80-b5744930846b)
+- [https://www.youtube.com/watch?v=QSJUTS9PScY](https://www.youtube.com/watch?v=QSJUTS9PScY)
 - [https://simsimjae.tistory.com/449](https://simsimjae.tistory.com/449)
 - [https://kimchunsick.me/2022-07-16-how-to-work-react/](https://kimchunsick.me/2022-07-16-how-to-work-react/)
 - [https://velog.io/@codns1223/Element와-Component의-차이](https://velog.io/@codns1223/Element%EC%99%80-Component%EC%9D%98-%EC%B0%A8%EC%9D%B4)
