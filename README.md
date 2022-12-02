@@ -25,13 +25,14 @@
 - 매주 목요일 18:00 ~ 18:30 (#Room2)
     - 캘린더는 1시간으로 잡아둠(스터디 이후의 토론을 1번방에서 좀 더 자유롭게 할 수 있게 하기 위해)
 
-| 주차 | 일시         | 분량                                     | 참여자                                                                     |
-|-----|-------------|-----------------------------------------|-------------------------------------------------------------------------|
-| 1주차   | 10월 27일 (목)  | How Does React Actually Work? React.js Deep Dive #1 (~5:33 React components, elements and component instances 까지)| Holand, Keno, Zoey, **Ran**, Daniel, Jimmy, Collin
-| 2주차   | 11월 03일 (목)  | How Does React Actually Work? React.js Deep Dive #1 (5:34 ~ 10:59 Reconciliation)| **Holand**, Zoey, Ran, Jimmy
-| 3주차   | 11월 10일 (목)  | How Does React Actually Work? React.js Deep Dive #1 (10:59 ~ Rendering)| Holand, Zoey, Ran, **Jimmy**, Daniel, Harry, Keno
-| 4주차   | 11월 17일 (목)  | What Is React Fiber? React.js Deep Dive #2 | Holand, **Zoey**, Jimmy, Daniel, Harry
-| 5주차   | 11월 24일 (목)  | How Do React Hooks Actually Work? React.js Deep Dive #3 | Zoey, Ran, **Harry**, Keno, Jimmy
+| 주차  | 일시          | 분량                                                                                                                | 참여자                                                                     |
+|-----|-------------|-------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| 1주차 | 10월 27일 (목) | How Does React Actually Work? React.js Deep Dive #1 (~5:33 React components, elements and component instances 까지) | Holand, Keno, Zoey, **Ran**, Daniel, Jimmy, Collin
+| 2주차 | 11월 03일 (목) | How Does React Actually Work? React.js Deep Dive #1 (5:34 ~ 10:59 Reconciliation)                                 | **Holand**, Zoey, Ran, Jimmy
+| 3주차 | 11월 10일 (목) | How Does React Actually Work? React.js Deep Dive #1 (10:59 ~ Rendering)                                           | Holand, Zoey, Ran, **Jimmy**, Daniel, Harry, Keno
+| 4주차 | 11월 17일 (목) | What Is React Fiber? React.js Deep Dive #2                                                                        | Holand, **Zoey**, Jimmy, Daniel, Harry
+| 5주차 | 11월 24일 (목) | How Do React Hooks Actually Work? React.js Deep Dive #3                                                           | Zoey, Ran, **Harry**, Keno, Jimmy
+| 6주차 | 12월 01일 (목) | How Does React State Actually Work? React.js Deep Dive #4                                                         | Zoey, **Daniel**, Harry, Keno, Jimmy
 
 ## 참여자 :sparkles:
 
